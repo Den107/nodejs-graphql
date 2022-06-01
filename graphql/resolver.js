@@ -10,7 +10,7 @@ module.exports = {
         }
     },
 
-    async createTodo({todo}){
+    async createTodo({todo}) {
         try {
             return await Todo.create({
                 title: todo.title,
@@ -19,6 +19,17 @@ module.exports = {
 
         } catch (e) {
             throw new Error('Title is required')
+        }
+    },
+
+    async completeTodo({id}) {
+        try {
+            const todo = await Todo.findByPk(id)
+            todo.done = true
+            await todo.save()
+            return todo
+        } catch (e) {
+            throw new Error('Id is required')
         }
     }
 }
